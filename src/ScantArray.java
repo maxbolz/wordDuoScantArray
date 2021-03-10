@@ -59,11 +59,17 @@ public class ScantArray {
      * Precondition:  0 <= col < getNumColumns()
      */
     public void removeColumn(int col){
-        /* part b */
 
-
-
-
+        for(int i = entries.size()-1; i >= 0; i--) {
+            if(entries.get(i).getColumn() == col) {
+                entries.remove(i);
+            }
+            else if (entries.get(i).getColumn() > col){
+                ScantArrayEntry temp = new ScantArrayEntry(entries.get(i).getRow(),entries.get(i).getColumn()-1,entries.get(i).getValue());
+                entries.set(i, temp);
+            }
+        }
+        this.numColumns--;
     }
 
     /** Allows the ScantArray to be printed.  The
@@ -76,16 +82,21 @@ public class ScantArray {
      * @return
      */
     public String toString(){
-        /* part c */
         String s = "";
 
-
-
-
+        for(int i = 0; i < this.getNumRows(); i++) {
+            for(int j = 0; j < this.getNumColumns(); j++) {
+                System.out.print(this.getValueAt(i,j) + " ");
+            }
+            System.out.println("");
+        }
         return s;
     }
 
     public static void main(String[] args){
+        //-------------------------------------------------
+        System.out.println("---------------------------------");
+        System.out.println("Scant Array 1:\n");
         ScantArray sa1 = new ScantArray(4,5);
         sa1.addEntry(1,4,4);
         sa1.addEntry(2,0,1);
@@ -102,8 +113,30 @@ public class ScantArray {
 
         sa1.removeColumn(1);
         System.out.println(sa1);
+        System.out.println("---------------------------------");
+        //-------------------------------------------------
+        System.out.println("Scant Array 2:\n");
+        ScantArray sa2 = new ScantArray(3,8);
 
-        /******* please add one more test of your own *******/
+        sa2.addEntry(2,5,7);
+        sa2.addEntry(1,3,5);
+        sa2.addEntry(1,2,6);
+        sa2.addEntry(0,7,9);
+        sa2.addEntry(2,2,9);
+
+        System.out.println(sa2.getValueAt(2,0));
+        System.out.println(sa2.getValueAt(2,5));
+        System.out.println(sa2.getValueAt(2,2));
+
+        System.out.println("Rows: " + sa2.getNumRows());
+        System.out.println("Columns: " + sa2.getNumColumns());
+
+        System.out.println("\nBefore removing Column 5:");
+        System.out.println(sa2);
+        sa2.removeColumn(5);
+        System.out.println("After removing Column 5:");
+        System.out.println(sa2);
+        System.out.println("---------------------------------");
     }
 }
 
